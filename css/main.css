@@ -4,9 +4,9 @@ body {
   background-color: #F3F6F8;
 	margin:0;
 }
-.grecaptcha-badge{
+/*.grecaptcha-badge{
 	    display: none;
-}
+}*/
 	
 .loginbox {
 	position: absolute;
