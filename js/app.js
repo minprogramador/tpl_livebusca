@@ -12,7 +12,9 @@ function loadmain() {
 		$('#app').html(rendered);
 		
 		$.get('js/tpls/mainleft.html', function(template) {
-			var rendered = Mustache.render(template);
+			var titulo   = `Live Busca, seu sistema completo !`;
+			var mensagem = `Somos uma empresa de Tecnologia da Informação genuinamente brasileira fornecedora de ferramentas para localização de pessoas e empresas para uso legal em todo o território nacional.`;
+			var rendered = Mustache.render(template, {titulo: titulo, mensagem: mensagem});
 			$('#boxleft').html(rendered);
 		});
 
@@ -20,33 +22,19 @@ function loadmain() {
 			var rendered = Mustache.render(template);
 			$('#boxmain').html(rendered);
 		});
-
-	  // $.get('js/tpls/topo.html', function(template) {
-	  //   var rendered = Mustache.render(template, {name: "Luke"});
-	  //   $('#topo').html(rendered);
-	  // });
-
-	  // $.get('js/tpls/row-cards.html', function(template) {
-	  //   var rendered = Mustache.render(template, {name: "Luke"});
-	  //   $('#cards1').html(rendered);
-	  // });
-
-	  // $.get('js/tpls/row-cards2.html', function(template) {
-	  //   var rendered = Mustache.render(template, {name: "Luke"});
-	  //   $('#cards2').html(rendered);
-	  // });
-
-	  // $.get('js/tpls/row-cards3.html', function(template) {
-	  //   var rendered = Mustache.render(template, {name: "Luke"});
-	  //   $('#cards3').html(rendered);
-	  // });
-
-	  // $.get('js/tpls/rodape.html', function(template) {
-	  //   var rendered = Mustache.render(template, {name: "Luke"});
-	  //   $('#rodape').html(rendered);
-	  // });
-
-
-
   });
+}
+
+function loadFaleConosco() {
+	$.get('js/tpls/contato.html', function(template) {
+		var rendered = Mustache.render(template);
+		$('#boxmain').html(rendered);
+	});
+}
+
+function loadEsqueceuSenha() {
+	$.get('js/tpls/recsenha.html', function(template) {
+		var rendered = Mustache.render(template);
+		$('#boxmain').html(rendered);
+	});
 }
