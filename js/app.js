@@ -6,6 +6,58 @@
 // 	$('#target').html(rendered);
 // }
 
+var cap;
+
+function loadcaptcha() {
+	var keyCap = '6Ldz7oYUAAAAACDvUt-S_bT3cjIOgOxl2ar2fvd-';
+	var cap = grecaptcha.render('submit', {
+		'sitekey' :  keyCap,
+		'callback' : login,
+	});
+
+	$('.grecaptcha-badge').appendTo("body");
+}
+
+function callback() {
+  return new Promise(function(resolve, reject) {  
+
+    if (grecaptcha === undefined) {
+        alert('Recaptcha non definito'); 
+        //return;
+        reject();
+    }
+
+    var response = grecaptcha.getResponse();
+    console.log(response);
+
+    if (!response) {
+        alert('Coud not get recaptcha response'); 
+        //return;
+        reject();
+    }
+
+    $.ajax({
+    'url' : 'validate-recaptcha.php',
+    'type' : 'POST',
+    'data' : {
+        'response' : response   
+    },
+    'success' : function(data) {              
+        alert('Data: '+data);
+        resolve();
+    },
+    'error' : function(request,error)
+    {
+        alert("Request: "+JSON.stringify(request));
+        reject();   
+    }
+    });
+    grecaptcha.reset();
+
+  }); //end promise
+}
+
+
 function loadmain() {
 	$.get('js/tpls/main.html', function(template) {
 		var rendered = Mustache.render(template);
@@ -21,12 +73,97 @@ function loadmain() {
 		$.get('js/tpls/login.html', function(template) {
 			var rendered = Mustache.render(template);
 			$('#boxmain').html(rendered);
-			//onload();
-
-
-
+			loadcaptcha();
 		});
   });
+}
+
+
+function login(token) {
+	var usuario 	 = $("#usuario").val();
+	var revendedor = $("#revendedor").val();
+	var senha			 = $("#senha").val();
+
+	var payload = {
+		usuario: usuario,
+		revendedor: revendedor,
+		senha: senha,
+		token: token
+	}
+
+	callback();
+
+  
+	// $.ajax({
+	// 	method : "POST",
+	// 	url : "./auth",
+	// 	data : payload,
+	// 	timeout: 8000,
+	// })
+	// .done(function(res) {
+	// grecaptcha.reset(cap);
+
+	// 	//console.log(res);
+	// 	//console.log(res.token);
+	// 	//console.log(res.msg);
+	// 	//console.log(res.error);
+
+	// 	if (res.error == true) {
+			
+	// 		if (res.msg) {
+ //    			var msg = res.msg;
+ //    		} else {
+ //    			var msg = 'Usuario ou senha invalidos';
+ //    		}
+ //    		console.log('reset 71');
+	// 	//	resetcap();
+
+        
+	// 		$('#alertt').show();
+	// 		$('#alertt').addClass('alert-danger');
+	// 		$('#message-alert').html('<strong>Ops!</strong> ' + msg);			
+		
+	// 	} else {
+
+	// 		if (res.token) {
+	// 			console.log('usuario ok, redirecionar para painel.');
+	// 			$('#alertt').removeClass("alert-danger");
+	// 			$('#alertt').show();
+	// 			$('#alertt').addClass('alert alert-success');
+	// 			$('#message-alert').html('Aguarde, redirecionando...');
+	// 			document.cookie = 'token=' + res.token;
+	// 			document.location = './Painel';
+	// 		} else {
+   
+	// 			if (res.msg) {
+	//     			var msg = res.msg;
+	//     		} else {
+	//     			var msg = 'Usuario ou senha invalidos';
+	//     		}
+
+	// 			console.log('reset 96');
+	// 			//loadcaptcha();
+	// 			//resetcap();
+	        
+	// 			$('#alertt').show();
+	// 			$('#alertt').addClass('alert-danger');
+	// 			$('#message-alert').html('<strong>Ops!</strong> ' + msg);			
+
+	// 		}
+	// 	}
+
+	// })
+	// .fail(function() {
+	// 	console.log('reset 108');
+	// 	//resetcap();
+	// 	$('#alertt').show();
+	// 	$('#alertt').addClass('alert-warning');
+	// 	$('#message-alert').html('<strong>Ops!</strong> Sistema indisponivel, tente novamente em breve.');    
+	// 	console.log('error ao buscar dados, demorou mais de 8s.....');
+
+	// });
+  
+	console.log('executando ajax...');  
 }
 
 
