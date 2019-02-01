@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <title>reCAPTCHA demo</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- Boostrap Validator --> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js" ></script>
+
+        <script type="text/javascript">
+            var demo1Call = 0;
+            var demo2Call = 0;
+            var $key = '6Ldz7oYUAAAAACDvUt-S_bT3cjIOgOxl2ar2fvd-';
+            $(document).ready(function () {
+                $('#demo-form1').validator().on('submit', function (e) {
+                    if (e.isDefaultPrevented()) {
+                        // handle the invalid form...
+                        console.log("validation failed");
+                    } else {
+                        // everything looks good!
+                        demo1Call = 1;
+                        $(document).find('#recaptcha1').remove();
+                        console.log($(document).find('#recaptcha1'))
+                        $('#demo-form1').append("<div id='recaptcha1' ></div>");
+
+                        e.preventDefault();
+                        console.log("validation success");
+                        if (typeof widgetId1 != 'undefined')
+                            grecaptcha.reset(widgetId1);
+                        if (demo1Call == 1)
+                        {
+                            widgetId1 = grecaptcha.render('recaptcha1', {
+                                'sitekey': $key,
+                                'callback': onSubmit1,
+                                'size': "invisible"
+                            });
+                        }
+
+                        grecaptcha.reset(widgetId1);
+
+                        grecaptcha.execute(widgetId1);
+                        console.log('show');
+                    }
+                });
+
+                $('#demo-form2').validator().on('submit', function (e) {
+                    if (e.isDefaultPrevented()) {
+                        // handle the invalid form...
+                        console.log("validation failed");
+                    } else {
+                        // everything looks good!
+                        demo2Call++;
+
+                        e.preventDefault();
+                        console.log("validation success");
+
+                        if (demo2Call == 1)
+                        {
+                            widgetId2 = grecaptcha.render('recaptcha2', {
+                                'sitekey': $key,
+                                'callback': onSubmit2,
+                                'size': "invisible"
+                            });
+                        }
+
+                        grecaptcha.reset(widgetId2);
+
+                        grecaptcha.execute(widgetId2);
+                        console.log('show');
+                    }
+                });
+
+            });
+
+            function onSubmit1(token) {
+                alert('good');
+                //document.getElementById("demo-form1").submit();
+            }
+
+            function onSubmit2(token) {
+                alert('good good');
+                //document.getElementById("demo-form2").submit();
+            }
+
+        </script>
+
+
+    </head>
+    <body>
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col-md-5 col-md-offset-3">
+                    <form id="demo-form1" data-toggle="validator" role="form"  action="admin.php" method="POST" >
+                        <div class="form-group">
+                            <label for="inputName" class="control-label">Name</label>
+                            <input type="text" class="form-control" id="inputName" placeholder="Geordy James" required/>
+                        </div>
+                        <div id='recaptcha1' ></div>
+                        <button class="btn btn-block btn-primary"  type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col-md-5 col-md-offset-3">
+                    <form id="demo-form2" data-toggle="validator" role="form"  action="admin2.php" method="POST" >
+                        <div class="form-group">
+                            <label for="inputName" class="control-label">Name</label>
+                            <input type="text" class="form-control" id="inputName" placeholder="Geordy James" required/>
+                        </div>
+                        <div id='recaptcha2' ></div>
+                        <button class="btn btn-block btn-primary"  type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>  
+        </div>
+        <script src="https://www.google.com/recaptcha/api.js" async defer ></script>
+    </body>
+</html>

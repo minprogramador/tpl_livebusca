@@ -18,45 +18,6 @@ function loadcaptcha() {
 	$('.grecaptcha-badge').appendTo("body");
 }
 
-function callback() {
-  return new Promise(function(resolve, reject) {  
-
-    if (grecaptcha === undefined) {
-        alert('Recaptcha non definito'); 
-        //return;
-        reject();
-    }
-
-    var response = grecaptcha.getResponse();
-    console.log(response);
-
-    if (!response) {
-        alert('Coud not get recaptcha response'); 
-        //return;
-        reject();
-    }
-
-    $.ajax({
-    'url' : 'validate-recaptcha.php',
-    'type' : 'POST',
-    'data' : {
-        'response' : response   
-    },
-    'success' : function(data) {              
-        alert('Data: '+data);
-        resolve();
-    },
-    'error' : function(request,error)
-    {
-        alert("Request: "+JSON.stringify(request));
-        reject();   
-    }
-    });
-    grecaptcha.reset();
-
-  }); //end promise
-}
-
 
 function loadmain() {
 	$.get('js/tpls/main.html', function(template) {
@@ -73,7 +34,7 @@ function loadmain() {
 		$.get('js/tpls/login.html', function(template) {
 			var rendered = Mustache.render(template);
 			$('#boxmain').html(rendered);
-			loadcaptcha();
+			//loadcaptcha();
 		});
   });
 }
@@ -91,8 +52,7 @@ function login(token) {
 		token: token
 	}
 
-	callback();
-
+	alert('login');
   
 	// $.ajax({
 	// 	method : "POST",
@@ -181,22 +141,4 @@ function loadEsqueceuSenha() {
 	});
 }
 
-
-// function onSubmit(token) {
-//     alert('Thanks ' + document.getElementById('usuario').value + '!');
-//   }
-
-//   function validate(event) {
-//     event.preventDefault();
-//     if (!document.getElementById('usuario').value) {
-//       alert("Please enter your name.");
-//     } else {
-//       grecaptcha.execute();
-//     }
-//   }
-
-//   function onload() {
-//     var element = document.getElementById('submit');
-//     element.onclick = validate;
-//   
 
