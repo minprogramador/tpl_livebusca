@@ -18,9 +18,9 @@ function loadcaptcha() {
 	$('.grecaptcha-badge').appendTo("body");
 }
 
-
 function loadmain() {
 	$.get('js/tpls/main.html', function(template) {
+
 		var rendered = Mustache.render(template);
 		$('#app').html(rendered);
 		
@@ -36,7 +36,9 @@ function loadmain() {
 			$('#boxmain').html(rendered);
 			//loadcaptcha();
 		});
+
   });
+
 }
 
 
@@ -51,79 +53,6 @@ function login(token) {
 		senha: senha,
 		token: token
 	}
-
-	alert('login');
-  
-	// $.ajax({
-	// 	method : "POST",
-	// 	url : "./auth",
-	// 	data : payload,
-	// 	timeout: 8000,
-	// })
-	// .done(function(res) {
-	// grecaptcha.reset(cap);
-
-	// 	//console.log(res);
-	// 	//console.log(res.token);
-	// 	//console.log(res.msg);
-	// 	//console.log(res.error);
-
-	// 	if (res.error == true) {
-			
-	// 		if (res.msg) {
- //    			var msg = res.msg;
- //    		} else {
- //    			var msg = 'Usuario ou senha invalidos';
- //    		}
- //    		console.log('reset 71');
-	// 	//	resetcap();
-
-        
-	// 		$('#alertt').show();
-	// 		$('#alertt').addClass('alert-danger');
-	// 		$('#message-alert').html('<strong>Ops!</strong> ' + msg);			
-		
-	// 	} else {
-
-	// 		if (res.token) {
-	// 			console.log('usuario ok, redirecionar para painel.');
-	// 			$('#alertt').removeClass("alert-danger");
-	// 			$('#alertt').show();
-	// 			$('#alertt').addClass('alert alert-success');
-	// 			$('#message-alert').html('Aguarde, redirecionando...');
-	// 			document.cookie = 'token=' + res.token;
-	// 			document.location = './Painel';
-	// 		} else {
-   
-	// 			if (res.msg) {
-	//     			var msg = res.msg;
-	//     		} else {
-	//     			var msg = 'Usuario ou senha invalidos';
-	//     		}
-
-	// 			console.log('reset 96');
-	// 			//loadcaptcha();
-	// 			//resetcap();
-	        
-	// 			$('#alertt').show();
-	// 			$('#alertt').addClass('alert-danger');
-	// 			$('#message-alert').html('<strong>Ops!</strong> ' + msg);			
-
-	// 		}
-	// 	}
-
-	// })
-	// .fail(function() {
-	// 	console.log('reset 108');
-	// 	//resetcap();
-	// 	$('#alertt').show();
-	// 	$('#alertt').addClass('alert-warning');
-	// 	$('#message-alert').html('<strong>Ops!</strong> Sistema indisponivel, tente novamente em breve.');    
-	// 	console.log('error ao buscar dados, demorou mais de 8s.....');
-
-	// });
-  
-	console.log('executando ajax...');  
 }
 
 
