@@ -134,6 +134,8 @@ div.flex-align {
 .initload {
 	width: 130px;
 	height: 32px;	
+	margin-left: auto;
+	margin-right: auto;
 }
 .initload img{
 	width: 32px;
