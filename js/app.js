@@ -7,6 +7,7 @@
 // }
 var demo1Call = 0;
 var demo2Call = 0;
+var demo3Call = 0;
 var $key = '6Ldz7oYUAAAAACDvUt-S_bT3cjIOgOxl2ar2fvd-';
 
 
@@ -44,11 +45,75 @@ function loadcaptcha() {
             console.log('show');
         }
     });
-}
 
-function onSubmit2(token) {
-	alert('good good');
-    //document.getElementById("demo-form2").submit();
+
+	$('#frmRecSenha').validator().on('submit', function (e) {
+    
+    	if (e.isDefaultPrevented()) {
+        	// handle the invalid form...
+            console.log("validation failed");
+        } else {
+        	// everything looks good!
+            demo2Call = 1;
+            $(document).find('#recaptchaRecSenha').remove();
+            console.log($(document).find('#recaptchaRecSenha'))
+            $('#frmRecSenha').append("<div id='recaptchaRecSenha' ></div>");
+			
+			e.preventDefault();
+            console.log("validation success");
+            if (typeof widgetId2 != 'undefined')
+            	grecaptcha.reset(widgetId2);
+            
+            if (demo2Call == 1)
+            {
+            	widgetId2 = grecaptcha.render('recaptchaRecSenha', {
+                	'sitekey': $key,
+                    'callback': recSenha,
+                    'size': "invisible"
+                });
+            }
+
+            grecaptcha.reset(widgetId2);
+			
+			grecaptcha.execute(widgetId2);
+            console.log('show');
+        }
+    });
+
+	$('#frmContato').validator().on('submit', function (e) {
+    
+    	if (e.isDefaultPrevented()) {
+        	// handle the invalid form...
+            console.log("validation failed");
+        } else {
+        	// everything looks good!
+            demo3Call = 1;
+            $(document).find('#recaptchaContato').remove();
+            console.log($(document).find('#recaptchaContato'))
+            $('#frmContato').append("<div id='recaptchaContato'></div>");
+			
+			e.preventDefault();
+            console.log("validation success");
+            if (typeof widgetId3 != 'undefined')
+            	grecaptcha.reset(widgetId3);
+            
+            if (demo3Call == 1)
+            {
+            	widgetId3 = grecaptcha.render('recaptchaContato', {
+                	'sitekey': $key,
+                    'callback': contato,
+                    'size': "invisible"
+                });
+            }
+
+            grecaptcha.reset(widgetId3);
+			
+			grecaptcha.execute(widgetId3);
+            console.log('show');
+        }
+    });
+
+
 }
 
 function loadmain() {
@@ -87,14 +152,44 @@ function login(token) {
 		token: token
 	}
 
-	alert('fazer submit ! >> '+token);
+	alert('LOGIN - fazer submit ! >> '+token);
 }
 
+function recSenha(token) {
+	var usuario 	 = $("#usuario").val();
+	var revendedor = $("#revendedor").val();
+	var senha			 = $("#senha").val();
+
+	var payload = {
+		usuario: usuario,
+		revendedor: revendedor,
+		senha: senha,
+		token: token
+	}
+
+	alert('REC SENHA - fazer submit ! >> '+token);
+}
+
+function contato(token) {
+	var usuario 	 = $("#usuario").val();
+	var revendedor = $("#revendedor").val();
+	var senha			 = $("#senha").val();
+
+	var payload = {
+		usuario: usuario,
+		revendedor: revendedor,
+		senha: senha,
+		token: token
+	}
+
+	alert('CONTATO - fazer submit ! >> '+token);
+}
 
 function loadFaleConosco() {
 	$.get('js/tpls/contato.html', function(template) {
 		var rendered = Mustache.render(template);
 		$('#boxmain').html(rendered);
+		loadcaptcha();
 	});
 }
 
@@ -102,6 +197,7 @@ function loadEsqueceuSenha() {
 	$.get('js/tpls/recsenha.html', function(template) {
 		var rendered = Mustache.render(template);
 		$('#boxmain').html(rendered);
+		loadcaptcha();
 	});
 }
 
