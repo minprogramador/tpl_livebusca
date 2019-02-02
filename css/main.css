@@ -131,6 +131,35 @@ div.flex-align {
   height: 100%;
 }
 
+.initload {
+	width: 130px;
+	height: 32px;	
+}
+.initload img{
+	width: 32px;
+	height: 32px;
+	float: left;
+}
+
+.initload p {
+	padding-top: 4%;
+}
+
+.loading {
+	width: 130px;
+	height: 32px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 25%;
+}
+.loading img {
+	float: left;
+}
+
+.loading p {
+	padding-top: 3%;
+}
+
 /*Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.98px) { 
 	#logo img{
