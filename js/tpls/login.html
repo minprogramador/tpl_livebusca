@@ -6,13 +6,13 @@
                         </h4>
                     </div> 
 
-                    <form action="javascript:void(0)" method="POST" id="frm">
+                    <form id="demo-form1" data-toggle="validator" role="form"  action="javascript:void(0)" method="POST">
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-user"></i>
                                 </span>
-                                <input type="text" class="form-control input" placeholder="Digite seu usuario" name="usuario" id="usuario">
+                                <input type="text" class="form-control input" placeholder="Digite seu usuario" name="usuario" id="usuario" required>
                             </div>
                         </div>
 
@@ -30,7 +30,7 @@
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-lock"></i>        
                                 </span>
-                                <input type="password" class="form-control input" placeholder="Digite sua senha" id="senha" name="senha">
+                                <input type="password" class="form-control input" placeholder="Digite sua senha" id="senha" name="senha" required>
                             </div>
                         </div>
               
@@ -51,15 +51,9 @@
 
                         <div class="form-group bntok">
 
-
- <div id='recaptcha' class="g-recaptcha"
-          data-sitekey="6Ldz7oYUAAAAACDvUt-S_bT3cjIOgOxl2ar2fvd-"
-          data-callback="onSubmit"
-          data-size="invisible"></div>
-
-  
-
-							<button id="submit" class="btn btn-primary">
+                            <div id='recaptcha1' ></div>
+							
+                            <button id="submit" type="submit" class="btn btn-primary">
                             	Entrar
                             </button>
                         </div>

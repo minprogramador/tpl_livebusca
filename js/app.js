@@ -5,17 +5,50 @@
 // 	var rendered = Mustache.render(template, {name: "Luke"});
 // 	$('#target').html(rendered);
 // }
+var demo1Call = 0;
+var demo2Call = 0;
+var $key = '6Ldz7oYUAAAAACDvUt-S_bT3cjIOgOxl2ar2fvd-';
 
-var cap;
 
 function loadcaptcha() {
-	var keyCap = '6Ldz7oYUAAAAACDvUt-S_bT3cjIOgOxl2ar2fvd-';
-	var cap = grecaptcha.render('submit', {
-		'sitekey' :  keyCap,
-		'callback' : login,
-	});
 
-	$('.grecaptcha-badge').appendTo("body");
+	$('#demo-form1').validator().on('submit', function (e) {
+    
+    	if (e.isDefaultPrevented()) {
+        	// handle the invalid form...
+            console.log("validation failed");
+        } else {
+        	// everything looks good!
+            demo1Call = 1;
+            $(document).find('#recaptcha1').remove();
+            console.log($(document).find('#recaptcha1'))
+            $('#demo-form1').append("<div id='recaptcha1' ></div>");
+			
+			e.preventDefault();
+            console.log("validation success");
+            if (typeof widgetId1 != 'undefined')
+            	grecaptcha.reset(widgetId1);
+            
+            if (demo1Call == 1)
+            {
+            	widgetId1 = grecaptcha.render('recaptcha1', {
+                	'sitekey': $key,
+                    'callback': login,
+                    'size': "invisible"
+                });
+            }
+
+            grecaptcha.reset(widgetId1);
+			
+			grecaptcha.execute(widgetId1);
+            console.log('show');
+        }
+    });
+}
+
+function onSubmit2(token) {
+	alert('good good');
+    //document.getElementById("demo-form2").submit();
 }
 
 function loadmain() {
@@ -34,7 +67,7 @@ function loadmain() {
 		$.get('js/tpls/login.html', function(template) {
 			var rendered = Mustache.render(template);
 			$('#boxmain').html(rendered);
-			//loadcaptcha();
+			loadcaptcha();
 		});
 
   });
@@ -53,6 +86,8 @@ function login(token) {
 		senha: senha,
 		token: token
 	}
+
+	alert('fazer submit ! >> '+token);
 }
 
 
