@@ -12,6 +12,15 @@
         <script src="js/validator.min.js" type="text/javascript"></script>
         <script src="https://www.google.com/recaptcha/api.js?render=explicit" type="text/javascript"></script>
         <script src="js/mustache.min.js" type="text/javascript"></script>
+    
+        <script id="notfound" type="x-tmpl-mustache">
+            <br><br><br><br>
+            <div class="alert alert-danger alert-dismissible fade in text-center" role="alert">
+                <strong>ERROR 404</strong> Pagina nao encontrada!
+            </div>
+            <p class="text-center"><a href="#Login">Pagina inicial</a></p>
+        </script>
+
         <script src="js/app.js?nocache" type="text/javascript"></script>
     </head>
     <body onload="loadmain()" id="main">
@@ -35,5 +44,8 @@
                 </noscript>
             </div>
         </div>
+
+
+
     </body>
 </html>
