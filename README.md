@@ -23,7 +23,7 @@
 -------------------------------------
 
 #### Pagina Inicial iphone 6.
-![Pagina Inicial iphone 6](prints/iphone6.png)
+![Pagina Inicial iphone 6](prints/Iphone6.png)
 
 -------------------------------------
 
