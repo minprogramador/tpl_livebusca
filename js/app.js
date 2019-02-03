@@ -117,18 +117,85 @@ function loadcaptcha() {
 }
 
 function login(token) {
-	var usuario 	 = $("#usuario").val();
-	var revendedor = $("#revendedor").val();
-	var senha			 = $("#senha").val();
 
-	var payload = {
-		usuario: usuario,
-		revendedor: revendedor,
-		senha: senha,
-		token: token
-	}
 
-	alert('LOGIN - fazer submit ! >> '+token);
+    var usuario      = $("#usuario").val();
+    var revendedor = $("#revendedor").val();
+    var senha            = $("#senha").val();
+
+    var payload = {
+        usuario: usuario,
+        revendedor: revendedor,
+        senha: senha,
+        token: token
+    }
+  
+    console.log('132..');
+    
+    $.ajax({
+        method : "POST",
+        url : "./auth",
+        data : payload,
+        timeout: 8000,
+    })
+    .done(function(res) {
+        //console.log(res);
+        //console.log(res.token);
+        //console.log(res.msg);
+        //console.log(res.error);
+
+        if (res.error == true) {
+            
+            if (res.msg) {
+                var msg = res.msg;
+            } else {
+                var msg = 'Usuario ou senha invalidos';
+            }
+
+        
+            $('#alertt').show();
+            $('#alertt').addClass('alert-danger');
+            $('#message-alert').html('<strong>Ops!</strong> ' + msg);           
+        
+        } else {
+
+            if (res.token) {
+                console.log('usuario ok, redirecionar para painel.');
+                $('#alertt').removeClass("alert-danger");
+                $('#alertt').show();
+                $('#alertt').addClass('alert alert-success');
+                $('#message-alert').html('Aguarde, redirecionando...');
+                document.cookie = 'token=' + res.token;
+                document.location = './Painel';
+            } else {
+   
+                if (res.msg) {
+                    var msg = res.msg;
+                } else {
+                    var msg = 'Usuario ou senha invalidos';
+                }
+
+            
+                $('#alertt').show();
+                $('#alertt').addClass('alert-danger');
+                $('#message-alert').html('<strong>Ops!</strong> ' + msg);           
+
+            }
+        }
+
+    })
+    .fail(function() {
+
+        $('#alertt').show();
+        $('#alertt').addClass('alert-warning');
+        $('#message-alert').html('<strong>Ops!</strong> Sistema indisponivel, tente novamente em breve.');    
+        console.log('error ao buscar dados, demorou mais de 8s.....');
+
+    });
+  
+    console.log('executando ajax...');  
+
+
 }
 
 function recSenha(token) {
